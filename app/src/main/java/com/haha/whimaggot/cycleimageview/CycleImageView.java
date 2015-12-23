@@ -12,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,7 +192,27 @@ public class CycleImageView extends FrameLayout{
          */
         @Override
         public boolean dispatchTouchEvent(MotionEvent ev) {
-            getParent().requestDisallowInterceptTouchEvent(true);
+            int actionMask = ev.getActionMasked();
+            float startX = 0,startY = 0,endX = 0,endY = 0;
+            switch (actionMask){
+                case MotionEvent.ACTION_DOWN:
+                    startX = ev.getX();
+                    startY = ev.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    endX = ev.getX();
+                    endY = ev.getY();
+                    break;
+            }
+            float distanceX = Math.abs(startX) - Math.abs(endX);
+            float distanceY = Math.abs(startY) - Math.abs(endY);
+            float type = Math.abs(distanceX/distanceY);
+            Log.e("lalalalalaal",""+distanceX+"==========="+distanceY+"========="+type);
+            if(type<3) {
+                getParent().requestDisallowInterceptTouchEvent(true);
+            }else{
+                getParent().requestDisallowInterceptTouchEvent(false);
+            }
             return super.dispatchTouchEvent(ev);
         }
         /**
