@@ -208,7 +208,7 @@ public class CycleImageView extends FrameLayout{
             float distanceY = Math.abs(startY) - Math.abs(endY);
             float type = Math.abs(distanceX/distanceY);
             Log.e("lalalalalaal",""+distanceX+"==========="+distanceY+"========="+type);
-            if(type<3) {
+            if(Math.abs(distanceY)<300 && Math.abs(distanceY)>110) {
                 getParent().requestDisallowInterceptTouchEvent(true);
             }else{
                 getParent().requestDisallowInterceptTouchEvent(false);
